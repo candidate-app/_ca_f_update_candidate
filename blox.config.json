@@ -1,1 +1,1 @@
-{"name":"f_update_candidate","type":"function","source":{"https":"https://github.com/candidate-app/_ca_f_update_candidate","ssh":"git@github.com:candidate-app/_ca_f_update_candidate.git"},"language":"nodejs","start":"npx webpack-dev-server","build":"npx webpack","postPull":"npm i"}
+{"name":"f_update_candidate","type":"function","source":{"https":"https://github.com/candidate-app/_ca_f_update_candidate.git","ssh":"git@github.com:candidate-app/_ca_f_update_candidate.git"},"language":"nodejs","start":"npx webpack-dev-server","build":"npx webpack","postPull":"npm i"}
