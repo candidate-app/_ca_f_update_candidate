@@ -1,17 +1,44 @@
+import fs from "fs";
+import path from "path";
+import { getBody, getDB, sendResponse, shieldApi } from "./utils.js";
 
+/**
+ * Update Candidate request hanlder
+ * @param {*} req
+ * @param {*} res
+ */
+const updateCandidate = async (req, res) => {
+  try {
 
-const f_update_candidate = async (req, res) => {
+    if (req.params["health"] === "health") {
+      return sendResponse(res, 200, {
+        success: true,
+        msg: "Health check success",
+      });
+    }
 
-  // health check
-  if (req.params["health"] === "health") {
-    res.write(JSON.stringify({success: true, msg: "Health check success"}))
-    res.end()
+    const DB_FILE = path.resolve("../localdb.json");
+    const localDBData = getDB(DB_FILE);
+    const { id, ...updateData } = await getBody(req);
+
+    const index = localDBData.findIndex((obj) => {
+      return obj.id == id;
+    });
+
+    if (index !== -1) {
+      localDBData[index] = {
+        ...localDBData[index],
+        ...updateData,
+      };
+
+      fs.writeFileSync(DB_FILE, JSON.stringify(localDBData));
+      sendResponse(res, 200, { status: true, msg: "success" });
+    } else {
+      sendResponse(res, 400, { status: false, msg: "Cadidate not found" });
+    }
+  } catch (e) {
+    sendResponse(res, 500, { status: false, msg: e.message, err: e });
   }
+};
 
-  // Add your code here
-  res.write(JSON.stringify({success: true, msg: `Hello f_update_candidate`}))
-  res.end()
-  
-}
-
-export default f_update_candidate
+export default updateCandidate;
