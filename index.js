@@ -25,6 +25,8 @@ const updateCandidate = async (req, res) => {
       return obj.id == id;
     });
 
+    
+
     if (index !== -1) {
       localDBData[index] = {
         ...localDBData[index],
